@@ -176,6 +176,38 @@
     .footer-heart { margin-top: 2.4rem; color: rgba(255,255,255,0.9); opacity: 0; animation: rise 1.1s ease 0.65s forwards; }
     .footer-heart svg { width: 26px; height: 26px; }
 
+    /* ---------- sound toggle ---------- */
+    .sound-toggle {
+      position: fixed;
+      top: max(14px, env(safe-area-inset-top));
+      left: 14px;
+      z-index: 50;
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 50%;
+      background: rgba(178, 60, 33, 0.35);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      color: #FFF6F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 4px 14px rgba(120, 30, 12, 0.3);
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+    .sound-toggle:active { transform: scale(0.92); }
+    .sound-toggle svg { width: 22px; height: 22px; }
+    /* default (playing): show speaker-on, hide muted */
+    .sound-toggle .ic-off { display: none; }
+    .sound-toggle .ic-on  { display: block; }
+    /* muted state */
+    .sound-toggle.muted .ic-on  { display: none; }
+    .sound-toggle.muted .ic-off { display: block; }
+    .sound-toggle.muted { background: rgba(178, 60, 33, 0.55); }
+
     @keyframes rise {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -187,6 +219,21 @@
 </head>
 
 <body>
+  <!-- Background music -->
+  <audio id="bgm" src="magic-moments.mp3" loop preload="auto"></audio>
+  <button id="soundToggle" class="sound-toggle" aria-label="הפעלה או השתקה של המוזיקה" title="מוזיקה">
+    <svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 5 6 9H3v6h3l5 4V5z"/>
+      <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+      <path d="M18.5 6a9 9 0 0 1 0 12"/>
+    </svg>
+    <svg class="ic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 5 6 9H3v6h3l5 4V5z"/>
+      <line x1="22" y1="9" x2="16" y2="15"/>
+      <line x1="16" y1="9" x2="22" y2="15"/>
+    </svg>
+  </button>
+
   <div class="page">
 
     <!-- HERO: couple photo blending into the red -->
@@ -247,5 +294,70 @@
     </div>
 
   </div>
+
+  <script>
+    (function () {
+      var audio = document.getElementById('bgm');
+      var btn = document.getElementById('soundToggle');
+      audio.volume = 0.65;
+
+      var playing = false;
+
+      function reflect() {
+        btn.classList.toggle('muted', !playing);
+      }
+
+      function startPlayback() {
+        var p = audio.play();
+        if (p && p.then) {
+          p.then(function () {
+            playing = true;
+            reflect();
+            removeGestureListeners();
+          }).catch(function () {
+            // Autoplay blocked — wait for a user gesture.
+            playing = false;
+            reflect();
+          });
+        }
+      }
+
+      function onFirstGesture() {
+        if (!playing) startPlayback();
+      }
+
+      var gestureEvents = ['pointerdown', 'touchstart', 'click', 'keydown', 'scroll'];
+      function removeGestureListeners() {
+        gestureEvents.forEach(function (ev) {
+          window.removeEventListener(ev, onFirstGesture);
+        });
+      }
+
+      // 1) Try to autoplay right away (works on desktop).
+      startPlayback();
+
+      // 2) Otherwise, begin on the visitor's first interaction.
+      gestureEvents.forEach(function (ev) {
+        window.addEventListener(ev, onFirstGesture, { passive: true });
+      });
+
+      // 3) Manual mute / unmute.
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (playing) {
+          audio.pause();
+          playing = false;
+        } else {
+          audio.play();
+          playing = true;
+          removeGestureListeners();
+        }
+        reflect();
+      });
+
+      // Start visually in the "muted" look until playback truly begins.
+      reflect();
+    })();
+  </script>
 </body>
 </html>
