@@ -176,6 +176,106 @@
     .footer-heart { margin-top: 2.4rem; color: rgba(255,255,255,0.9); opacity: 0; animation: rise 1.1s ease 0.65s forwards; }
     .footer-heart svg { width: 26px; height: 26px; }
 
+    /* ---------- intro cover / envelope ---------- */
+    body.intro { overflow: hidden; }
+
+    .cover {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: radial-gradient(120% 90% at 50% 40%, #DA5B3B 0%, var(--red) 48%, var(--red-deep) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 0.9s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cover.open { opacity: 0; pointer-events: none; }
+
+    .cover-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .envelope {
+      --w: min(80vw, 330px);
+      position: relative;
+      width: var(--w);
+      height: calc(var(--w) * 0.66);
+      perspective: 900px;
+      cursor: pointer;
+      filter: drop-shadow(0 22px 45px rgba(120, 30, 12, 0.45));
+      animation: floaty 3.6s ease-in-out infinite;
+    }
+    .envelope.opening { animation: none; }
+
+    .env-back {
+      position: absolute; inset: 0; z-index: 1;
+      background: #FCEEE6;
+      border-radius: 12px;
+    }
+    .env-letter {
+      position: absolute; left: 7%; width: 86%; bottom: 8%; height: 80%;
+      z-index: 2;
+      background: #FFFFFF;
+      border-radius: 8px 8px 5px 5px;
+      box-shadow: 0 3px 10px rgba(120, 30, 12, 0.12);
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 12%;
+      transition: transform 1s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .env-letter svg { width: 22px; height: 22px; opacity: 0.85; }
+    .envelope.opening .env-letter { transform: translateY(-48%); }
+
+    /* front pocket — top edge dips to center so the letter rises out */
+    .env-front {
+      position: absolute; inset: 0; z-index: 3;
+      background: #F6DDCE;
+      clip-path: polygon(0 0, 50% 62%, 100% 0, 100% 100%, 0 100%);
+      border-radius: 12px;
+    }
+    /* top flap — hinged at the top, opens upward */
+    .env-flap {
+      position: absolute; top: 0; left: 0; width: 100%; height: 62%;
+      z-index: 4;
+      background: #F1D2C0;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transition: transform 0.9s ease, z-index 0s linear 0.45s;
+    }
+    .envelope.opening .env-flap { transform: rotateX(180deg); z-index: 0; }
+
+    .env-seal {
+      position: absolute; top: 42%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5; width: 46px; height: 46px;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      filter: drop-shadow(0 3px 6px rgba(120, 30, 12, 0.35));
+    }
+    .env-seal svg { width: 100%; height: 100%; display: block; }
+    .envelope.opening .env-seal { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+
+    .open-hint {
+      margin-top: 2.2rem;
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 1.08rem;
+      letter-spacing: 0.02em;
+      color: var(--cream);
+      animation: pulse 1.9s ease-in-out infinite;
+    }
+    .envelope.opening ~ .open-hint { opacity: 0; transition: opacity 0.4s ease; }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-3px); }
+    }
+
     /* ---------- sound toggle ---------- */
     .sound-toggle {
       position: fixed;
@@ -218,9 +318,32 @@
   </style>
 </head>
 
-<body>
+<body class="intro">
   <!-- Background music -->
   <audio id="bgm" src="magic-moments.mp3" loop preload="auto"></audio>
+
+  <!-- Intro cover: a sealed letter guests tap to open -->
+  <div id="cover" class="cover" role="button" tabindex="0" aria-label="הקישו לפתיחת המכתב">
+    <div class="cover-inner">
+      <div class="envelope" id="envelope">
+        <div class="env-back"></div>
+        <div class="env-letter">
+          <svg viewBox="0 0 24 24" fill="#CE4C2E" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 21s-8-4.9-8-10.4C4 7 6.2 5 8.8 5 10.4 5 11.6 5.9 12 7c.4-1.1 1.6-2 3.2-2C17.8 5 20 7 20 10.6 20 16.1 12 21 12 21z"/>
+          </svg>
+        </div>
+        <div class="env-front"></div>
+        <div class="env-flap"></div>
+        <div class="env-seal" aria-hidden="true">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="48" fill="#CE4C2E" stroke="#FFF6F0" stroke-width="3"/>
+            <path d="M50 71C50 71 30 59 30 44.5C30 37.5 35.4 33 41 33C45 33 48.5 35.3 50 38.5C51.5 35.3 55 33 59 33C64.6 33 70 37.5 70 44.5C70 59 50 71 50 71Z" fill="#FFF6F0"/>
+          </svg>
+        </div>
+      </div>
+      <p class="open-hint">הקישו לפתיחת המכתב</p>
+    </div>
+  </div>
   <button id="soundToggle" class="sound-toggle" aria-label="הפעלה או השתקה של המוזיקה" title="מוזיקה">
     <svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M11 5 6 9H3v6h3l5 4V5z"/>
@@ -299,9 +422,12 @@
     (function () {
       var audio = document.getElementById('bgm');
       var btn = document.getElementById('soundToggle');
+      var cover = document.getElementById('cover');
+      var envelope = document.getElementById('envelope');
       audio.volume = 0.65;
 
       var playing = false;
+      var opened = false;
 
       function reflect() {
         btn.classList.toggle('muted', !playing);
@@ -310,53 +436,39 @@
       function startPlayback() {
         var p = audio.play();
         if (p && p.then) {
-          p.then(function () {
-            playing = true;
-            reflect();
-            removeGestureListeners();
-          }).catch(function () {
-            // Autoplay blocked — wait for a user gesture.
-            playing = false;
-            reflect();
-          });
+          p.then(function () { playing = true; reflect(); })
+           .catch(function () { playing = false; reflect(); });
         }
       }
 
-      function onFirstGesture() {
-        if (!playing) startPlayback();
+      // Tap the letter → open the flap, start the music, reveal the page.
+      function openLetter() {
+        if (opened) return;
+        opened = true;
+        envelope.classList.add('opening');
+        startPlayback(); // fired inside the tap gesture, so mobile allows it
+        setTimeout(function () {
+          cover.classList.add('open');
+          document.body.classList.remove('intro');
+          window.scrollTo(0, 0);
+        }, 1000);
+        setTimeout(function () { cover.style.display = 'none'; }, 2000);
       }
 
-      var gestureEvents = ['pointerdown', 'touchstart', 'click', 'keydown', 'scroll'];
-      function removeGestureListeners() {
-        gestureEvents.forEach(function (ev) {
-          window.removeEventListener(ev, onFirstGesture);
-        });
-      }
-
-      // 1) Try to autoplay right away (works on desktop).
-      startPlayback();
-
-      // 2) Otherwise, begin on the visitor's first interaction.
-      gestureEvents.forEach(function (ev) {
-        window.addEventListener(ev, onFirstGesture, { passive: true });
+      cover.addEventListener('click', openLetter);
+      cover.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLetter(); }
       });
 
-      // 3) Manual mute / unmute.
+      // Manual mute / unmute (independent of the cover).
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
-        if (playing) {
-          audio.pause();
-          playing = false;
-        } else {
-          audio.play();
-          playing = true;
-          removeGestureListeners();
-        }
+        if (playing) { audio.pause(); playing = false; }
+        else { audio.play(); playing = true; }
         reflect();
       });
 
-      // Start visually in the "muted" look until playback truly begins.
-      reflect();
+      reflect(); // starts in the "muted" look until the letter is opened
     })();
   </script>
 </body>
