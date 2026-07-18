@@ -33,9 +33,8 @@
       font-family: 'Assistant', 'Frank Ruhl Libre', system-ui, sans-serif;
       color: var(--ink);
       background: var(--red);
-      /* soft warmth: subtle radial glow + deeper edges */
       background-image:
-        radial-gradient(120% 80% at 50% -10%, #DA5B3B 0%, var(--red) 45%, var(--red-deep) 100%);
+        radial-gradient(120% 70% at 50% 120%, #DA5B3B 0%, var(--red) 45%, var(--red-deep) 100%);
       min-height: 100vh;
       min-height: 100dvh;
       line-height: 1.9;
@@ -47,56 +46,106 @@
     .page {
       max-width: 640px;
       margin: 0 auto;
-      padding: clamp(2.2rem, 7vw, 3.5rem) clamp(1.5rem, 6vw, 2.5rem) 3rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      padding-bottom: 3rem;
     }
 
-    /* ---------- top emblem (echoes the sticker) ---------- */
-    .emblem {
-      width: 96px;
-      height: 96px;
-      margin-bottom: 1.1rem;
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 66vh;
+      min-height: 400px;
+      max-height: 620px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 28%;
+    }
+    /* red wash that blends the photo into the page */
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom,
+          rgba(178, 60, 33, 0.35) 0%,
+          rgba(206, 76, 46, 0.00) 22%,
+          rgba(206, 76, 46, 0.15) 55%,
+          rgba(206, 76, 46, 0.72) 82%,
+          var(--red) 100%);
+      pointer-events: none;
+    }
+    /* placeholder shown until couple.jpg is added */
+    .hero .placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      background: linear-gradient(160deg, #D9603F, #B23C21);
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.98rem;
+    }
+    .hero .placeholder svg { width: 52px; height: 52px; opacity: 0.9; }
+
+    .hero-caption {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 1.3rem;
       opacity: 0;
-      animation: rise 1s ease 0.05s forwards;
+      animation: rise 1s ease 0.2s forwards;
     }
-    .emblem svg { width: 100%; height: 100%; display: block; }
-
+    .emblem { width: 74px; height: 74px; }
+    .emblem svg { width: 100%; height: 100%; display: block;
+      filter: drop-shadow(0 2px 10px rgba(120, 30, 12, 0.45)); }
     .kicker {
       font-family: 'Pinyon Script', cursive;
-      font-size: clamp(1.9rem, 8vw, 2.5rem);
-      font-weight: 400;
+      font-size: clamp(2rem, 9vw, 2.7rem);
       line-height: 1;
       color: var(--cream);
-      margin-bottom: 0.2rem;
       direction: ltr;
-      opacity: 0;
-      animation: rise 1s ease 0.15s forwards;
+      margin-top: 0.1rem;
+      text-shadow: 0 2px 14px rgba(120, 30, 12, 0.5);
     }
 
-    /* ---------- decorative divider ---------- */
+    /* ---------- CONTENT ---------- */
+    .content {
+      width: 100%;
+      padding: 0.4rem clamp(1.5rem, 6vw, 2.5rem) 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     .divider {
       display: flex;
       align-items: center;
       gap: 0.7rem;
-      margin: 1.4rem 0 2rem;
+      margin: 0.6rem 0 1.8rem;
       opacity: 0;
-      animation: rise 1s ease 0.25s forwards;
+      animation: rise 1s ease 0.3s forwards;
     }
-    .divider .line {
-      width: clamp(38px, 12vw, 60px);
-      height: 1px;
-      background: rgba(255, 255, 255, 0.55);
-    }
+    .divider .line { width: clamp(38px, 12vw, 60px); height: 1px; background: rgba(255,255,255,0.55); }
     .divider .dot { color: rgba(255,255,255,0.9); font-size: 0.8rem; }
 
-    /* ---------- the letter ---------- */
-    .letter {
-      opacity: 0;
-      animation: rise 1.1s ease 0.35s forwards;
-    }
+    .letter { opacity: 0; animation: rise 1.1s ease 0.4s forwards; }
 
     .greeting {
       font-family: 'Frank Ruhl Libre', serif;
@@ -106,90 +155,31 @@
       margin-bottom: 1.6rem;
       color: var(--white);
     }
-
     .letter p {
       font-size: clamp(1.05rem, 4.3vw, 1.18rem);
-      font-weight: 400;
       color: var(--cream);
       margin: 0 auto 1.25rem;
       max-width: 34ch;
     }
+    .letter p.lead { color: var(--white); font-weight: 600; }
 
-    .letter p.lead {
-      color: var(--white);
-      font-weight: 600;
-    }
-
-    /* ---------- signature ---------- */
-    .sign {
-      margin-top: 2.2rem;
-      opacity: 0;
-      animation: rise 1.1s ease 0.5s forwards;
-    }
+    .sign { margin-top: 2.2rem; opacity: 0; animation: rise 1.1s ease 0.5s forwards; }
     .sign .love {
-      font-family: 'Frank Ruhl Libre', serif;
-      font-style: italic;
-      font-size: clamp(1.15rem, 4.5vw, 1.3rem);
-      color: var(--cream);
-      margin-bottom: 0.15rem;
+      font-family: 'Frank Ruhl Libre', serif; font-style: italic;
+      font-size: clamp(1.15rem, 4.5vw, 1.3rem); color: var(--cream); margin-bottom: 0.15rem;
     }
     .sign .names {
-      font-family: 'Frank Ruhl Libre', serif;
-      font-weight: 900;
-      font-size: clamp(1.8rem, 8vw, 2.4rem);
-      letter-spacing: 0.02em;
-      color: var(--white);
-      line-height: 1.2;
+      font-family: 'Frank Ruhl Libre', serif; font-weight: 900;
+      font-size: clamp(1.8rem, 8vw, 2.4rem); letter-spacing: 0.02em; color: var(--white); line-height: 1.2;
     }
 
-    /* ---------- couple photo ---------- */
-    .photo-wrap {
-      margin-top: 2.8rem;
-      opacity: 0;
-      animation: rise 1.1s ease 0.65s forwards;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-    .photo {
-      width: min(78%, 340px);
-      aspect-ratio: 4 / 5;
-      border-radius: 200px 200px 18px 18px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.10);
-      border: 3px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 18px 40px rgba(120, 30, 12, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-    /* placeholder shown until a real photo is added */
-    .photo .placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
-      color: rgba(255, 255, 255, 0.75);
-      font-size: 0.92rem;
-      padding: 1rem;
-    }
-    .photo .placeholder svg { width: 42px; height: 42px; opacity: 0.85; }
-
-    .footer-heart {
-      margin-top: 2.4rem;
-      color: rgba(255, 255, 255, 0.9);
-      opacity: 0;
-      animation: rise 1.1s ease 0.8s forwards;
-    }
+    .footer-heart { margin-top: 2.4rem; color: rgba(255,255,255,0.9); opacity: 0; animation: rise 1.1s ease 0.65s forwards; }
     .footer-heart svg { width: 26px; height: 26px; }
 
     @keyframes rise {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; opacity: 1 !important; }
     }
@@ -197,67 +187,65 @@
 </head>
 
 <body>
-  <main class="page">
+  <div class="page">
 
-    <!-- Emblem: white heart outline echoing the sticker -->
-    <div class="emblem" aria-hidden="true">
-      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="47" stroke="#FFF6F0" stroke-width="2.5"/>
-        <path d="M50 71C50 71 30 59 30 44.5C30 37.5 35.4 33 41 33C45 33 48.5 35.3 50 38.5C51.5 35.3 55 33 59 33C64.6 33 70 37.5 70 44.5C70 59 50 71 50 71Z" fill="#FFF6F0"/>
-      </svg>
-    </div>
+    <!-- HERO: couple photo blending into the red -->
+    <header class="hero">
+      <img src="couple.jpg" alt="ברונט וגיא"
+           onerror="this.style.display='none'; this.parentElement.querySelector('.placeholder').style.display='flex';" />
+      <div class="placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <circle cx="9" cy="10" r="2"/>
+          <path d="M21 15l-5-5L5 19"/>
+        </svg>
+        <span>כאן תופיע התמונה שלנו</span>
+      </div>
 
-    <div class="kicker">With love,</div>
-
-    <div class="divider" aria-hidden="true">
-      <span class="line"></span>
-      <span class="dot">♥</span>
-      <span class="line"></span>
-    </div>
-
-    <article class="letter">
-      <h1 class="greeting">משפחה, חברים ואורחים יקרים שלנו,</h1>
-
-      <p>רצינו לכתוב לכם מכתב קטן ולהודות לכם על כך שבאתם לחגוג איתנו ביום המיוחד הזה — יום שהוא אבן דרך משמעותית כל כך בחיינו.</p>
-
-      <p>אבל אנחנו רוצים להודות לכם גם — ובעיקר — על כל הרגעים שחלקתם איתנו מעבר ליום הזה, אלה שבונים את החיים האמיתיים.</p>
-
-      <p>על האהבה, החברות, והנוכחות שלכם בחיינו לאורך כל הדרך.</p>
-
-      <p>בחרנו לתת לכם למזכרת קטנה צנצנת של המיונז האהוב עלינו.</p>
-
-      <p>לא כי הוא הדבר הכי מרשים במקרר, אלא כי הוא תמיד שם. תמיד מצליח לשדרג. לא רק בארוחות חגיגיות, אלא גם ברגעים הפשוטים של היום-יום.</p>
-
-      <p class="lead">תודה שאתם חלק מהחיים שלנו, תודה על כל הרגעים הגדולים ועל כל הרגעים ה״קטנים״ שהם לא קטנים בכלל.</p>
-    </article>
-
-    <div class="sign">
-      <div class="love">אוהבים,</div>
-      <div class="names">ברונט וגיא</div>
-    </div>
-
-    <!-- Couple photo: drop a file named couple.jpg next to this page -->
-    <div class="photo-wrap">
-      <figure class="photo">
-        <img src="couple.jpg" alt="ברונט וגיא"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="placeholder" style="display:none;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="5" width="18" height="14" rx="2"/>
-            <circle cx="9" cy="10" r="2"/>
-            <path d="M21 15l-5-5L5 19"/>
+      <div class="hero-caption">
+        <div class="emblem" aria-hidden="true">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="47" stroke="#FFF6F0" stroke-width="2.5"/>
+            <path d="M50 71C50 71 30 59 30 44.5C30 37.5 35.4 33 41 33C45 33 48.5 35.3 50 38.5C51.5 35.3 55 33 59 33C64.6 33 70 37.5 70 44.5C70 59 50 71 50 71Z" fill="#FFF6F0"/>
           </svg>
-          <span>כאן תופיע התמונה שלנו</span>
         </div>
-      </figure>
+        <div class="kicker">With love,</div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="divider" aria-hidden="true">
+        <span class="line"></span><span class="dot">♥</span><span class="line"></span>
+      </div>
+
+      <article class="letter">
+        <h1 class="greeting">משפחה, חברים ואורחים יקרים שלנו,</h1>
+
+        <p>רצינו לכתוב לכם מכתב קטן ולהודות לכם על כך שבאתם לחגוג איתנו ביום המיוחד הזה — יום שהוא אבן דרך משמעותית כל כך בחיינו.</p>
+
+        <p>אבל אנחנו רוצים להודות לכם גם — ובעיקר — על כל הרגעים שחלקתם איתנו מעבר ליום הזה, אלה שבונים את החיים האמיתיים.</p>
+
+        <p>על האהבה, החברות, והנוכחות שלכם בחיינו לאורך כל הדרך.</p>
+
+        <p>בחרנו לתת לכם למזכרת קטנה צנצנת של המיונז האהוב עלינו.</p>
+
+        <p>לא כי הוא הדבר הכי מרשים במקרר, אלא כי הוא תמיד שם. תמיד מצליח לשדרג. לא רק בארוחות חגיגיות, אלא גם ברגעים הפשוטים של היום-יום.</p>
+
+        <p class="lead">תודה שאתם חלק מהחיים שלנו, תודה על כל הרגעים הגדולים ועל כל הרגעים ה״קטנים״ שהם לא קטנים בכלל.</p>
+      </article>
+
+      <div class="sign">
+        <div class="love">אוהבים,</div>
+        <div class="names">ברונט וגיא</div>
+      </div>
+
+      <div class="footer-heart" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 21s-8-4.9-8-10.4C4 7 6.2 5 8.8 5 10.4 5 11.6 5.9 12 7c.4-1.1 1.6-2 3.2-2C17.8 5 20 7 20 10.6 20 16.1 12 21 12 21z"/>
+        </svg>
+      </div>
     </div>
 
-    <div class="footer-heart" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 21s-8-4.9-8-10.4C4 7 6.2 5 8.8 5 10.4 5 11.6 5.9 12 7c.4-1.1 1.6-2 3.2-2C17.8 5 20 7 20 10.6 20 16.1 12 21 12 21z"/>
-      </svg>
-    </div>
-
-  </main>
+  </div>
 </body>
 </html>
