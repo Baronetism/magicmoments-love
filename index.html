@@ -16,7 +16,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;600;700&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Assistant:wght@300;400;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -108,38 +108,6 @@
     }
     .hero .placeholder svg { width: 52px; height: 52px; opacity: 0.9; }
 
-    .hero-caption {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-bottom: 1.5rem;
-      opacity: 0;
-    }
-    /* delicate line + diamond flourish (replaces the repeated heart emblem) */
-    .flourish {
-      width: 48px; height: 1px;
-      background: rgba(255, 246, 240, 0.6);
-      position: relative;
-      margin-bottom: 1rem;
-    }
-    .flourish::before {
-      content: "";
-      position: absolute; left: 50%; top: 50%;
-      width: 5px; height: 5px;
-      background: var(--cream);
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
-    .kicker {
-      font-family: 'Pinyon Script', cursive;
-      font-size: clamp(2rem, 9vw, 2.7rem);
-      line-height: 1;
-      color: var(--cream);
-      direction: ltr;
-      text-shadow: 0 2px 14px rgba(120, 30, 12, 0.5);
-    }
-
     /* ---------- CONTENT ---------- */
     .content {
       width: 100%;
@@ -197,7 +165,6 @@
     .footer-heart svg { width: 24px; height: 24px; }
 
     /* content unfolds when the letter is opened */
-    .revealed .hero-caption { animation: rise 1s ease 0.15s forwards; }
     .revealed .divider      { animation: rise 1s ease 0.30s forwards; }
     .revealed .letter       { animation: rise 1s ease 0.45s forwards; }
     .revealed .sign         { animation: rise 1s ease 0.60s forwards; }
@@ -460,10 +427,6 @@
         <span>כאן תופיע התמונה שלנו</span>
       </div>
 
-      <div class="hero-caption">
-        <span class="flourish" aria-hidden="true"></span>
-        <div class="kicker">With love,</div>
-      </div>
     </header>
 
     <div class="content">
