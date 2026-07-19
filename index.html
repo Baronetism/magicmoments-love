@@ -6,6 +6,9 @@
   <title>ברונט וגיא · תודה שבאתם</title>
   <meta name="description" content="מכתב תודה מברונט וגיא" />
 
+  <!-- Favicon: heart on the brand red -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23CE4C2E'/%3E%3Cpath d='M50 76C50 76 26 61 26 43C26 34 32 29 39 29C44 29 48 32 50 36C52 32 56 29 61 29C68 29 74 34 74 43C74 61 50 76 50 76Z' fill='%23FFF6F0'/%3E%3C/svg%3E" />
+
   <!-- Social preview -->
   <meta property="og:title" content="ברונט וגיא · תודה שבאתם" />
   <meta property="og:description" content="מכתב תודה קטן מאיתנו אליכם 🤍" />
@@ -30,11 +33,14 @@
     html { -webkit-text-size-adjust: 100%; }
 
     body {
-      font-family: 'Assistant', 'Frank Ruhl Libre', system-ui, sans-serif;
+      font-family: 'Assistant', 'Frank Ruhl Libre', 'Segoe UI', system-ui, sans-serif;
       color: var(--ink);
-      background: var(--red);
+      background-color: var(--red);
+      /* solid red base + soft fixed glow so the hero blends in seamlessly (no seam) */
       background-image:
-        radial-gradient(120% 70% at 50% 120%, #DA5B3B 0%, var(--red) 45%, var(--red-deep) 100%);
+        radial-gradient(115% 75% at 50% 0%, rgba(255, 246, 240, 0.06) 0%, rgba(255, 246, 240, 0) 42%),
+        radial-gradient(120% 95% at 50% 100%, rgba(120, 30, 12, 0.30) 0%, rgba(120, 30, 12, 0) 55%);
+      background-attachment: fixed;
       min-height: 100vh;
       min-height: 100dvh;
       line-height: 1.9;
@@ -57,9 +63,9 @@
     .hero {
       position: relative;
       width: 100%;
-      height: 66vh;
-      min-height: 400px;
-      max-height: 620px;
+      height: 60vh;
+      min-height: 360px;
+      max-height: 560px;
       overflow: hidden;
       display: flex;
       align-items: flex-end;
@@ -73,17 +79,17 @@
       object-fit: cover;
       object-position: center 28%;
     }
-    /* red wash that blends the photo into the page */
+    /* red wash that blends the photo down into the page */
     .hero::after {
       content: "";
       position: absolute;
       inset: 0;
       background:
         linear-gradient(to bottom,
-          rgba(178, 60, 33, 0.35) 0%,
-          rgba(206, 76, 46, 0.00) 22%,
-          rgba(206, 76, 46, 0.15) 55%,
-          rgba(206, 76, 46, 0.72) 82%,
+          rgba(178, 60, 33, 0.30) 0%,
+          rgba(206, 76, 46, 0.00) 24%,
+          rgba(206, 76, 46, 0.12) 52%,
+          rgba(206, 76, 46, 0.68) 80%,
           var(--red) 100%);
       pointer-events: none;
     }
@@ -108,20 +114,29 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-bottom: 1.3rem;
+      padding-bottom: 1.5rem;
       opacity: 0;
-      animation: rise 1s ease 0.2s forwards;
     }
-    .emblem { width: 74px; height: 74px; }
-    .emblem svg { width: 100%; height: 100%; display: block;
-      filter: drop-shadow(0 2px 10px rgba(120, 30, 12, 0.45)); }
+    /* delicate line + diamond flourish (replaces the repeated heart emblem) */
+    .flourish {
+      width: 48px; height: 1px;
+      background: rgba(255, 246, 240, 0.6);
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    .flourish::before {
+      content: "";
+      position: absolute; left: 50%; top: 50%;
+      width: 5px; height: 5px;
+      background: var(--cream);
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
     .kicker {
       font-family: 'Pinyon Script', cursive;
       font-size: clamp(2rem, 9vw, 2.7rem);
       line-height: 1;
       color: var(--cream);
       direction: ltr;
-      margin-top: 0.1rem;
       text-shadow: 0 2px 14px rgba(120, 30, 12, 0.5);
     }
 
@@ -137,33 +152,38 @@
     .divider {
       display: flex;
       align-items: center;
-      gap: 0.7rem;
+      gap: 0.75rem;
       margin: 0.6rem 0 1.8rem;
       opacity: 0;
-      animation: rise 1s ease 0.3s forwards;
     }
-    .divider .line { width: clamp(38px, 12vw, 60px); height: 1px; background: rgba(255,255,255,0.55); }
-    .divider .dot { color: rgba(255,255,255,0.9); font-size: 0.8rem; }
+    .divider .line { width: clamp(34px, 11vw, 54px); height: 1px; background: rgba(255, 246, 240, 0.5); }
+    .divider .dia {
+      width: 6px; height: 6px;
+      background: var(--cream);
+      transform: rotate(45deg);
+      opacity: 0.9;
+    }
 
-    .letter { opacity: 0; animation: rise 1.1s ease 0.4s forwards; }
+    .letter { opacity: 0; }
 
     .greeting {
       font-family: 'Frank Ruhl Libre', serif;
       font-weight: 500;
       font-size: clamp(1.35rem, 5.5vw, 1.7rem);
       line-height: 1.5;
-      margin-bottom: 1.6rem;
+      margin-bottom: 1.7rem;
       color: var(--white);
     }
     .letter p {
-      font-size: clamp(1.05rem, 4.3vw, 1.18rem);
-      color: var(--cream);
-      margin: 0 auto 1.25rem;
-      max-width: 34ch;
+      font-size: clamp(1.06rem, 4.3vw, 1.18rem);
+      color: var(--white);
+      margin: 0 auto 1.3rem;
+      max-width: 33ch;
+      line-height: 1.85;
     }
-    .letter p.lead { color: var(--white); font-weight: 600; }
+    .letter p.lead { font-weight: 600; }
 
-    .sign { margin-top: 2.2rem; opacity: 0; animation: rise 1.1s ease 0.5s forwards; }
+    .sign { margin-top: 2.4rem; opacity: 0; }
     .sign .love {
       font-family: 'Frank Ruhl Libre', serif; font-style: italic;
       font-size: clamp(1.15rem, 4.5vw, 1.3rem); color: var(--cream); margin-bottom: 0.15rem;
@@ -173,8 +193,15 @@
       font-size: clamp(1.8rem, 8vw, 2.4rem); letter-spacing: 0.02em; color: var(--white); line-height: 1.2;
     }
 
-    .footer-heart { margin-top: 2.4rem; color: rgba(255,255,255,0.9); opacity: 0; animation: rise 1.1s ease 0.65s forwards; }
-    .footer-heart svg { width: 26px; height: 26px; }
+    .footer-heart { margin-top: 2.4rem; color: rgba(255, 246, 240, 0.9); opacity: 0; }
+    .footer-heart svg { width: 24px; height: 24px; }
+
+    /* content unfolds when the letter is opened */
+    .revealed .hero-caption { animation: rise 1s ease 0.15s forwards; }
+    .revealed .divider      { animation: rise 1s ease 0.30s forwards; }
+    .revealed .letter       { animation: rise 1s ease 0.45s forwards; }
+    .revealed .sign         { animation: rise 1s ease 0.60s forwards; }
+    .revealed .footer-heart { animation: rise 1s ease 0.75s forwards; }
 
     /* ---------- intro cover / envelope ---------- */
     body.intro { overflow: hidden; }
@@ -183,7 +210,7 @@
       position: fixed;
       inset: 0;
       z-index: 100;
-      background: radial-gradient(120% 90% at 50% 40%, #DA5B3B 0%, var(--red) 48%, var(--red-deep) 100%);
+      background: radial-gradient(120% 90% at 50% 42%, #DA5B3B 0%, var(--red) 50%, var(--red-deep) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -197,17 +224,47 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: 1.5rem;
+    }
+
+    .cover-title {
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+      font-family: 'Frank Ruhl Libre', serif;
+      font-weight: 600;
+      font-size: clamp(1.7rem, 7.5vw, 2.2rem);
+      letter-spacing: 0.01em;
+      color: var(--cream);
+      margin-bottom: 1.9rem;
+    }
+    .cover-title .amp {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-weight: 400;
+      font-style: italic;
+      font-size: 1.1em;
+      color: #FFE4D8;
+      margin: 0 0.05em;
+    }
+
+    .cover-date {
+      direction: rtl;
+      margin-top: 1.6rem;
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      color: rgba(255, 246, 240, 0.8);
     }
 
     .envelope {
-      --w: min(80vw, 330px);
+      --w: min(78vw, 320px);
       position: relative;
       width: var(--w);
       height: calc(var(--w) * 0.66);
       perspective: 900px;
       cursor: pointer;
-      filter: drop-shadow(0 22px 45px rgba(120, 30, 12, 0.45));
-      animation: floaty 3.6s ease-in-out infinite;
+      filter: drop-shadow(0 20px 40px rgba(120, 30, 12, 0.38));
+      animation: breathe 3.8s ease-in-out infinite;
     }
     .envelope.opening { animation: none; }
 
@@ -250,30 +307,43 @@
     .env-seal {
       position: absolute; top: 42%; left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 5; width: 46px; height: 46px;
+      z-index: 5; width: 42px; height: 42px;
       transition: opacity 0.4s ease, transform 0.4s ease;
-      filter: drop-shadow(0 3px 6px rgba(120, 30, 12, 0.35));
+      filter: drop-shadow(0 1px 2px rgba(120, 30, 12, 0.45));
     }
     .env-seal svg { width: 100%; height: 100%; display: block; }
     .envelope.opening .env-seal { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
 
     .open-hint {
-      margin-top: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: 1.9rem;
       font-family: 'Frank Ruhl Libre', serif;
-      font-size: 1.08rem;
+      font-size: 1.06rem;
       letter-spacing: 0.02em;
       color: var(--cream);
-      animation: pulse 1.9s ease-in-out infinite;
+    }
+    .open-hint span { animation: pulse 1.9s ease-in-out infinite; }
+    .open-hint .chev {
+      width: 20px; height: 20px;
+      color: rgba(255, 246, 240, 0.85);
+      animation: chevbounce 1.9s ease-in-out infinite;
     }
     .envelope.opening ~ .open-hint { opacity: 0; transition: opacity 0.4s ease; }
 
-    @keyframes floaty {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-7px); }
+    @keyframes breathe {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-7px) scale(1.012); }
     }
     @keyframes pulse {
-      0%, 100% { opacity: 0.5; transform: translateY(0); }
-      50% { opacity: 1; transform: translateY(-3px); }
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 1; }
+    }
+    @keyframes chevbounce {
+      0%, 100% { transform: translateY(0); opacity: 0.5; }
+      50% { transform: translateY(4px); opacity: 1; }
     }
 
     /* ---------- sound toggle ---------- */
@@ -300,10 +370,8 @@
     }
     .sound-toggle:active { transform: scale(0.92); }
     .sound-toggle svg { width: 22px; height: 22px; }
-    /* default (playing): show speaker-on, hide muted */
     .sound-toggle .ic-off { display: none; }
     .sound-toggle .ic-on  { display: block; }
-    /* muted state */
     .sound-toggle.muted .ic-on  { display: none; }
     .sound-toggle.muted .ic-off { display: block; }
     .sound-toggle.muted { background: rgba(178, 60, 33, 0.55); }
@@ -325,6 +393,8 @@
   <!-- Intro cover: a sealed letter guests tap to open -->
   <div id="cover" class="cover" role="button" tabindex="0" aria-label="הקישו לפתיחת המכתב">
     <div class="cover-inner">
+      <div class="cover-title">ברונט<span class="amp">&amp;</span>גיא</div>
+
       <div class="envelope" id="envelope">
         <div class="env-back"></div>
         <div class="env-letter">
@@ -336,14 +406,32 @@
         <div class="env-flap"></div>
         <div class="env-seal" aria-hidden="true">
           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="48" fill="#CE4C2E" stroke="#FFF6F0" stroke-width="3"/>
-            <path d="M50 71C50 71 30 59 30 44.5C30 37.5 35.4 33 41 33C45 33 48.5 35.3 50 38.5C51.5 35.3 55 33 59 33C64.6 33 70 37.5 70 44.5C70 59 50 71 50 71Z" fill="#FFF6F0"/>
+            <defs>
+              <radialGradient id="wax" cx="42%" cy="36%" r="68%">
+                <stop offset="0%" stop-color="#E46E50"/>
+                <stop offset="55%" stop-color="#CE4C2E"/>
+                <stop offset="100%" stop-color="#AE3A1F"/>
+              </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="46" fill="url(#wax)"/>
+            <circle cx="50" cy="50" r="46" fill="none" stroke="#FFF6F0" stroke-width="2" opacity="0.45"/>
+            <path d="M50 70C50 70 31 59 31 45.5C31 38.5 36 34.5 41 34.5C44.6 34.5 47.8 36.6 50 39.5C52.2 36.6 55.4 34.5 59 34.5C64 34.5 69 38.5 69 45.5C69 59 50 70 50 70Z" fill="#FFF6F0"/>
+            <ellipse cx="40" cy="33" rx="15" ry="8" fill="#FFFFFF" opacity="0.12"/>
           </svg>
         </div>
       </div>
-      <p class="open-hint">הקישו לפתיחת המכתב</p>
+
+      <div class="cover-date">29 ביולי 2026</div>
+
+      <div class="open-hint">
+        <span>הקישו לפתיחת המכתב</span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </div>
     </div>
   </div>
+
   <button id="soundToggle" class="sound-toggle" aria-label="הפעלה או השתקה של המוזיקה" title="מוזיקה">
     <svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <path d="M11 5 6 9H3v6h3l5 4V5z"/>
@@ -373,19 +461,14 @@
       </div>
 
       <div class="hero-caption">
-        <div class="emblem" aria-hidden="true">
-          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="47" stroke="#FFF6F0" stroke-width="2.5"/>
-            <path d="M50 71C50 71 30 59 30 44.5C30 37.5 35.4 33 41 33C45 33 48.5 35.3 50 38.5C51.5 35.3 55 33 59 33C64.6 33 70 37.5 70 44.5C70 59 50 71 50 71Z" fill="#FFF6F0"/>
-          </svg>
-        </div>
+        <span class="flourish" aria-hidden="true"></span>
         <div class="kicker">With love,</div>
       </div>
     </header>
 
     <div class="content">
       <div class="divider" aria-hidden="true">
-        <span class="line"></span><span class="dot">♥</span><span class="line"></span>
+        <span class="line"></span><span class="dia"></span><span class="line"></span>
       </div>
 
       <article class="letter">
@@ -441,7 +524,7 @@
         }
       }
 
-      // Tap the letter → open the flap, start the music, reveal the page.
+      // Tap the letter → open the flap, start the music, unfold the page.
       function openLetter() {
         if (opened) return;
         opened = true;
@@ -450,6 +533,7 @@
         setTimeout(function () {
           cover.classList.add('open');
           document.body.classList.remove('intro');
+          document.body.classList.add('revealed');
           window.scrollTo(0, 0);
         }, 1000);
         setTimeout(function () { cover.style.display = 'none'; }, 2000);
