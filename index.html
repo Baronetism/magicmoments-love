@@ -36,11 +36,6 @@
       font-family: 'Assistant', 'Frank Ruhl Libre', 'Segoe UI', system-ui, sans-serif;
       color: var(--ink);
       background-color: var(--red);
-      /* solid red base + soft fixed glow so the hero blends in seamlessly (no seam) */
-      background-image:
-        radial-gradient(115% 75% at 50% 0%, rgba(255, 246, 240, 0.06) 0%, rgba(255, 246, 240, 0) 42%),
-        radial-gradient(120% 95% at 50% 100%, rgba(120, 30, 12, 0.30) 0%, rgba(120, 30, 12, 0) 55%);
-      background-attachment: fixed;
       min-height: 100vh;
       min-height: 100dvh;
       line-height: 1.9;
@@ -68,10 +63,9 @@
       opacity: 0;
     }
     .hero img {
-      width: min(84%, 360px);
+      width: min(92%, 420px);
       height: auto;
       display: block;
-      filter: drop-shadow(0 12px 26px rgba(120, 30, 12, 0.3));
     }
 
     /* ---------- CONTENT ---------- */
@@ -101,9 +95,8 @@
     .letter { opacity: 0; }
 
     .greeting {
-      font-family: 'Frank Ruhl Libre', serif;
-      font-weight: 500;
-      font-size: clamp(1.35rem, 5.5vw, 1.7rem);
+      font-weight: 700;
+      font-size: clamp(1.45rem, 6vw, 1.85rem);
       line-height: 1.5;
       margin-bottom: 1.7rem;
       color: var(--white);
@@ -117,16 +110,14 @@
     }
     .letter p.lead { font-weight: 600; }
     .letter p.quote {
-      font-family: 'Frank Ruhl Libre', serif;
-      font-style: italic;
-      font-size: clamp(1.18rem, 4.8vw, 1.35rem);
+      font-weight: 600;
+      font-size: clamp(1.25rem, 5.2vw, 1.5rem);
       color: var(--cream);
     }
 
     .sign { margin-top: 2.4rem; opacity: 0; }
     .sign .love {
-      font-family: 'Frank Ruhl Libre', serif; font-style: italic;
-      font-size: clamp(1.15rem, 4.5vw, 1.3rem); color: var(--cream); margin-bottom: 0.15rem;
+      font-size: clamp(1.1rem, 4.4vw, 1.25rem); color: var(--cream); margin-bottom: 0.35rem;
     }
     .sign .names {
       font-family: 'Frank Ruhl Libre', serif; font-weight: 900;
@@ -185,7 +176,7 @@
       position: fixed;
       inset: 0;
       z-index: 100;
-      background: radial-gradient(120% 90% at 50% 42%, #D6533D 0%, var(--red) 50%, var(--red-deep) 100%);
+      background: var(--red);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -208,10 +199,10 @@
       gap: 0.55rem;
       font-family: 'Frank Ruhl Libre', serif;
       font-weight: 600;
-      font-size: clamp(1.7rem, 7.5vw, 2.2rem);
+      font-size: clamp(2.1rem, 9.5vw, 2.9rem);
       letter-spacing: 0.01em;
       color: var(--cream);
-      margin-bottom: 1.9rem;
+      margin-bottom: 2rem;
     }
     .cover-title .amp {
       font-family: 'Frank Ruhl Libre', serif;
@@ -292,24 +283,27 @@
     .env-seal svg { width: 100%; height: 100%; display: block; }
     .envelope.opening .env-seal { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
 
-    .open-hint {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.55rem;
-      margin-top: 1.9rem;
-      font-family: 'Frank Ruhl Libre', serif;
-      font-size: 1.06rem;
-      letter-spacing: 0.02em;
-      color: var(--cream);
+    .open-cta {
+      margin-top: 2.4rem;
+      font-family: 'Assistant', sans-serif;
+      font-size: clamp(1.1rem, 4.6vw, 1.3rem);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--red);
+      background: var(--cream);
+      border: none;
+      border-radius: 999px;
+      padding: 0.9rem 2.2rem;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(120, 30, 12, 0.3);
+      animation: ctapulse 2.4s ease-in-out infinite;
     }
-    .open-hint span { animation: pulse 1.9s ease-in-out infinite; }
-    .open-hint .chev {
-      width: 20px; height: 20px;
-      color: rgba(255, 246, 240, 0.85);
-      animation: chevbounce 1.9s ease-in-out infinite;
+    .envelope.opening ~ .open-cta { opacity: 0; transition: opacity 0.4s ease; }
+
+    @keyframes ctapulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 8px 22px rgba(120, 30, 12, 0.28); }
+      50% { transform: scale(1.04); box-shadow: 0 12px 28px rgba(120, 30, 12, 0.36); }
     }
-    .envelope.opening ~ .open-hint { opacity: 0; transition: opacity 0.4s ease; }
 
     @keyframes breathe {
       0%, 100% { transform: translateY(0) scale(1); }
@@ -399,12 +393,7 @@
         </div>
       </div>
 
-      <div class="open-hint">
-        <span>הקישו לפתיחת המכתב</span>
-        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 9l6 6 6-6"/>
-        </svg>
-      </div>
+      <div class="open-cta">הקישו לפתיחת המכתב</div>
     </div>
   </div>
 
@@ -468,15 +457,6 @@
         <div class="names">ברונט וגיא</div>
       </div>
 
-      <div class="ps">
-        <div class="ps-title">נ.ב. המלצות ההגשה הרשמיות של הזוג:</div>
-        <ul class="ps-list">
-          <li><span class="ps-emoji">🥩</span><span>עם סטייק טוב, בנדיבות וללא שיפוטיות.</span></li>
-          <li><span class="ps-emoji">🌯</span><span>בתוך בוריטו עסיסי.</span></li>
-          <li><span class="ps-emoji">🥪</span><span>או כדי להציל כריך בינוני.</span></li>
-        </ul>
-      </div>
-
       <div class="footer-heart" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 21s-8-4.9-8-10.4C4 7 6.2 5 8.8 5 10.4 5 11.6 5.9 12 7c.4-1.1 1.6-2 3.2-2C17.8 5 20 7 20 10.6 20 16.1 12 21 12 21z"/>
@@ -492,20 +472,36 @@
       var btn = document.getElementById('soundToggle');
       var cover = document.getElementById('cover');
       var envelope = document.getElementById('envelope');
-      audio.volume = 0.65;
+      var TARGET_VOL = 0.65;
+      audio.volume = TARGET_VOL;
 
       var playing = false;
       var opened = false;
+      var fadeTimer = null;
 
       function reflect() {
         btn.classList.toggle('muted', !playing);
       }
 
-      function startPlayback() {
+      // Ramp volume from 0 up to the target so the song eases in on the tap.
+      function fadeIn() {
+        if (fadeTimer) clearInterval(fadeTimer);
+        audio.volume = 0;
+        fadeTimer = setInterval(function () {
+          var v = audio.volume + 0.025;
+          if (v >= TARGET_VOL) { audio.volume = TARGET_VOL; clearInterval(fadeTimer); fadeTimer = null; }
+          else { audio.volume = v; }
+        }, 50);
+      }
+
+      function startPlayback(withFade) {
+        if (withFade) audio.volume = 0;
         var p = audio.play();
+        var done = function () { playing = true; reflect(); if (withFade) fadeIn(); };
         if (p && p.then) {
-          p.then(function () { playing = true; reflect(); })
-           .catch(function () { playing = false; reflect(); });
+          p.then(done).catch(function () { playing = false; reflect(); });
+        } else {
+          done();
         }
       }
 
@@ -514,7 +510,7 @@
         if (opened) return;
         opened = true;
         envelope.classList.add('opening');
-        startPlayback(); // fired inside the tap gesture, so mobile allows it
+        startPlayback(true); // fired inside the tap gesture; fades the song in
         setTimeout(function () {
           cover.classList.add('open');
           document.body.classList.remove('intro');
@@ -533,7 +529,7 @@
       btn.addEventListener('click', function (e) {
         e.stopPropagation();
         if (playing) { audio.pause(); playing = false; }
-        else { audio.play(); playing = true; }
+        else { if (fadeTimer) { clearInterval(fadeTimer); fadeTimer = null; } audio.volume = TARGET_VOL; audio.play(); playing = true; }
         reflect();
       });
 
