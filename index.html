@@ -7,7 +7,7 @@
   <meta name="description" content="מכתב תודה מברונט וגיא" />
 
   <!-- Favicon: heart on the brand red -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23CE4C2E'/%3E%3Cpath d='M50 76C50 76 26 61 26 43C26 34 32 29 39 29C44 29 48 32 50 36C52 32 56 29 61 29C68 29 74 34 74 43C74 61 50 76 50 76Z' fill='%23FFF6F0'/%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23C5372B'/%3E%3Cpath d='M50 76C50 76 26 61 26 43C26 34 32 29 39 29C44 29 48 32 50 36C52 32 56 29 61 29C68 29 74 34 74 43C74 61 50 76 50 76Z' fill='%23FFF6F0'/%3E%3C/svg%3E" />
 
   <!-- Social preview -->
   <meta property="og:title" content="ברונט וגיא · תודה שבאתם" />
@@ -20,9 +20,9 @@
 
   <style>
     :root {
-      --red: #CE4C2E;
-      --red-deep: #B23C21;
-      --red-soft: #D9603F;
+      --red: #C5372B;
+      --red-deep: #A82A1E;
+      --red-soft: #D24E38;
       --cream: #FFF6F0;
       --white: #FFFFFF;
       --ink: #FFFFFF;
@@ -116,6 +116,12 @@
       line-height: 1.85;
     }
     .letter p.lead { font-weight: 600; }
+    .letter p.quote {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-style: italic;
+      font-size: clamp(1.18rem, 4.8vw, 1.35rem);
+      color: var(--cream);
+    }
 
     .sign { margin-top: 2.4rem; opacity: 0; }
     .sign .love {
@@ -127,6 +133,40 @@
       font-size: clamp(1.8rem, 8vw, 2.4rem); letter-spacing: 0.02em; color: var(--white); line-height: 1.2;
     }
 
+    /* ---------- P.S. serving suggestions ---------- */
+    .ps {
+      margin-top: 2.8rem;
+      width: 100%;
+      max-width: 32ch;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+    }
+    .ps-title {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--cream);
+      margin-bottom: 1.1rem;
+      line-height: 1.5;
+    }
+    .ps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      text-align: right;
+    }
+    .ps-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 1.02rem;
+      line-height: 1.55;
+      color: var(--white);
+    }
+    .ps-emoji { font-size: 1.35rem; flex-shrink: 0; line-height: 1.4; }
+
     .footer-heart { margin-top: 2.4rem; color: rgba(255, 246, 240, 0.9); opacity: 0; }
     .footer-heart svg { width: 24px; height: 24px; }
 
@@ -135,7 +175,8 @@
     .revealed .divider      { animation: rise 1s ease 0.30s forwards; }
     .revealed .letter       { animation: rise 1s ease 0.45s forwards; }
     .revealed .sign         { animation: rise 1s ease 0.60s forwards; }
-    .revealed .footer-heart { animation: rise 1s ease 0.75s forwards; }
+    .revealed .ps           { animation: rise 1s ease 0.72s forwards; }
+    .revealed .footer-heart { animation: rise 1s ease 0.85s forwards; }
 
     /* ---------- intro cover / envelope ---------- */
     body.intro { overflow: hidden; }
@@ -144,7 +185,7 @@
       position: fixed;
       inset: 0;
       z-index: 100;
-      background: radial-gradient(120% 90% at 50% 42%, #DA5B3B 0%, var(--red) 50%, var(--red-deep) 100%);
+      background: radial-gradient(120% 90% at 50% 42%, #D6533D 0%, var(--red) 50%, var(--red-deep) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -293,7 +334,7 @@
       height: 44px;
       border: 1px solid rgba(255, 255, 255, 0.55);
       border-radius: 50%;
-      background: rgba(178, 60, 33, 0.35);
+      background: rgba(168, 42, 30, 0.35);
       -webkit-backdrop-filter: blur(6px);
       backdrop-filter: blur(6px);
       color: #FFF6F0;
@@ -311,7 +352,7 @@
     .sound-toggle .ic-on  { display: block; }
     .sound-toggle.muted .ic-on  { display: none; }
     .sound-toggle.muted .ic-off { display: block; }
-    .sound-toggle.muted { background: rgba(178, 60, 33, 0.55); }
+    .sound-toggle.muted { background: rgba(168, 42, 30, 0.55); }
 
     @keyframes rise {
       from { opacity: 0; transform: translateY(16px); }
@@ -335,7 +376,7 @@
       <div class="envelope" id="envelope">
         <div class="env-back"></div>
         <div class="env-letter">
-          <svg viewBox="0 0 24 24" fill="#CE4C2E" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="#C5372B" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M12 21s-8-4.9-8-10.4C4 7 6.2 5 8.8 5 10.4 5 11.6 5.9 12 7c.4-1.1 1.6-2 3.2-2C17.8 5 20 7 20 10.6 20 16.1 12 21 12 21z"/>
           </svg>
         </div>
@@ -345,9 +386,9 @@
           <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <radialGradient id="wax" cx="42%" cy="36%" r="68%">
-                <stop offset="0%" stop-color="#E46E50"/>
-                <stop offset="55%" stop-color="#CE4C2E"/>
-                <stop offset="100%" stop-color="#AE3A1F"/>
+                <stop offset="0%" stop-color="#DE5F45"/>
+                <stop offset="55%" stop-color="#C5372B"/>
+                <stop offset="100%" stop-color="#9C2A1C"/>
               </radialGradient>
             </defs>
             <circle cx="50" cy="50" r="46" fill="url(#wax)"/>
@@ -357,8 +398,6 @@
           </svg>
         </div>
       </div>
-
-      <div class="cover-date"><span>29</span><span>ביולי</span><span>2026</span></div>
 
       <div class="open-hint">
         <span>הקישו לפתיחת המכתב</span>
@@ -397,24 +436,45 @@
       <article class="letter">
         <h1 class="greeting">משפחה, חברים ואורחים יקרים שלנו,</h1>
 
-        <p>רצינו לכתוב לכם מכתב קטן ולהודות לכם על כך שבאתם לחגוג איתנו ביום המיוחד הזה, יום שהוא אבן דרך משמעותית כל כך בחיינו.</p>
+        <p>רצינו לכתוב לכם מכתב קטן ולהודות לכם על שבאתם לחגוג איתנו ביום המיוחד הזה, יום שהוא אבן דרך משמעותית כל כך בחיינו.</p>
 
-        <p>שמחנו לחוות אותו איתכם!</p>
+        <p>אבל יותר מהכול, רצינו להודות לכם על כל הרגעים שחלקתם איתנו מעבר ליום הזה. על האהבה, החברות והנוכחות שלכם בחיינו לאורך השנים.</p>
 
-        <p>אנחנו רוצים להודות לכם גם, ובעיקר, על כל הרגעים שחלקתם איתנו מעבר ליום הזה, אלה שבונים את החיים האמיתיים.</p>
+        <p>על הרגעים הגדולים, כמובן, אבל גם על כל הרגעים ה״קטנים״, שהם בעצם לא קטנים בכלל.</p>
 
-        <p>על האהבה, החברות, והנוכחות שלכם בחיינו לאורך כל הדרך.</p>
+        <p>אתם בטח שואלים את עצמכם:</p>
 
-        <p>בחרנו לתת לכם למזכרת קטנה צנצנת של המיונז האהוב עלינו.</p>
+        <p class="quote">״למה יש בידי צנצנת של מיונז דיז׳ון?״</p>
 
-        <p>לא כי הוא הדבר הכי מרשים במקרר, אלא כי הוא תמיד שם. תמיד מצליח לשדרג. לא רק בארוחות חגיגיות, אלא גם ברגעים הפשוטים של היום-יום.</p>
+        <p>וזאת שאלה נהדרת.</p>
 
-        <p class="lead">תודה שאתם חלק מהחיים שלנו, תודה על כל הרגעים הגדולים ועל כל הרגעים ה״קטנים״ שהם לא קטנים בכלל.</p>
+        <p>ראשית, חשוב להבהיר שאנחנו לא משווים אף אחד מכם למיונז.</p>
+
+        <p>אנחנו פשוט מאוד אוהבים את המיונז הזה.</p>
+
+        <p>הוא נמצא אצלנו בבית כמעט תמיד, מתאים כמעט לכל דבר, והופך ארוחה רגילה לקצת יותר טעימה וכיפית.</p>
+
+        <p>ואחרי ערב שכולו רגע אחד גדול, רצינו לשלוח אתכם הביתה עם משהו שייכנס דווקא לרגעים הרגילים. לארוחת ערב מאולתרת. לכריך שמרגיש שחסר לו משהו.</p>
+
+        <p>משהו קטן, שימושי וטעים, שיזכיר לכם אותנו גם אחרי שהמוזיקה תיפסק, והחיים ימשיכו דרך אלפי רגעים קטנים.</p>
+
+        <p>אז תודה שהייתם איתנו ברגע הגדול הזה.</p>
+
+        <p>ותודה גדולה אפילו יותר על כל הרגעים שלפניו ועל כל אלה שעוד יבואו אחריו.</p>
       </article>
 
       <div class="sign">
-        <div class="love">אוהבים,</div>
+        <div class="love">אוהבים אתכם,</div>
         <div class="names">ברונט וגיא</div>
+      </div>
+
+      <div class="ps">
+        <div class="ps-title">נ.ב. המלצות ההגשה הרשמיות של הזוג:</div>
+        <ul class="ps-list">
+          <li><span class="ps-emoji">🥩</span><span>עם סטייק טוב, בנדיבות וללא שיפוטיות.</span></li>
+          <li><span class="ps-emoji">🌯</span><span>בתוך בוריטו עסיסי.</span></li>
+          <li><span class="ps-emoji">🥪</span><span>או כדי להציל כריך בינוני.</span></li>
+        </ul>
       </div>
 
       <div class="footer-heart" aria-hidden="true">
