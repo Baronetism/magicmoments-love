@@ -63,7 +63,7 @@
       opacity: 0;
     }
     .hero img {
-      width: min(92%, 420px);
+      width: min(96%, 460px);
       height: auto;
       display: block;
     }
@@ -77,20 +77,12 @@
       align-items: center;
     }
 
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin: 0.6rem 0 1.8rem;
+    .top-heart {
+      margin: 0.4rem 0 1.9rem;
+      color: rgba(255, 246, 240, 0.9);
       opacity: 0;
     }
-    .divider .line { width: clamp(34px, 11vw, 54px); height: 1px; background: rgba(255, 246, 240, 0.5); }
-    .divider .dia {
-      width: 6px; height: 6px;
-      background: var(--cream);
-      transform: rotate(45deg);
-      opacity: 0.9;
-    }
+    .top-heart svg { width: 26px; height: 26px; }
 
     .letter { opacity: 0; }
 
@@ -159,11 +151,11 @@
     .ps-emoji { font-size: 1.35rem; flex-shrink: 0; line-height: 1.4; }
 
     .footer-heart { margin-top: 2.4rem; color: rgba(255, 246, 240, 0.9); opacity: 0; }
-    .footer-heart svg { width: 24px; height: 24px; }
+    .footer-heart svg { width: 26px; height: 26px; }
 
     /* content unfolds when the letter is opened */
     .revealed .hero         { animation: rise 1s ease 0.05s forwards; }
-    .revealed .divider      { animation: rise 1s ease 0.30s forwards; }
+    .revealed .top-heart    { animation: rise 1s ease 0.30s forwards; }
     .revealed .letter       { animation: rise 1s ease 0.45s forwards; }
     .revealed .sign         { animation: rise 1s ease 0.60s forwards; }
     .revealed .ps           { animation: rise 1s ease 0.72s forwards; }
@@ -418,8 +410,10 @@
     </header>
 
     <div class="content">
-      <div class="divider" aria-hidden="true">
-        <span class="line"></span><span class="dia"></span><span class="line"></span>
+      <div class="top-heart" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 21s-8-4.9-8-10.4C4 7 6.2 5 8.8 5 10.4 5 11.6 5.9 12 7c.4-1.1 1.6-2 3.2-2C17.8 5 20 7 20 10.6 20 16.1 12 21 12 21z"/>
+        </svg>
       </div>
 
       <article class="letter">
