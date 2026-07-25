@@ -35,6 +35,17 @@ IG_MAP = {
     "טריולי": "trioli_band",
     "ריקי בן ארי": "riki_ben_ari",
     "Names": "names_il",
+    "Take & Shake": "take.n.shake.polaroid",
+    "שי ונטלי": "shai_natali",
+    "מישל תורגמן": "michelturgeman",
+    "Sinteza": "labflower_israel",
+    "כלה": "baronetism",  # ברונט (bride) personal IG
+}
+
+# per-contact IG override (takes precedence over IG_MAP); matched by substring of
+# the contact name. Use when several contacts share one supplier/company.
+IG_BY_CONTACT = {
+    "אלירן": "rav_eliran_zaguri_adv",  # רבנות is shared with the kashrut supervisor
 }
 
 
@@ -62,12 +73,17 @@ for r in ws.iter_rows(min_row=2, values_only=True):
     category, supplier, contact, phone = (clean(r[0]), clean(r[1]), clean(r[2]), clean(r[3]))
     if not (category or supplier or contact):
         continue
+    ig = IG_MAP.get(supplier, "")
+    for name_frag, handle in IG_BY_CONTACT.items():
+        if name_frag in contact:
+            ig = handle
+            break
     contacts.append({
         "category": category,
         "supplier": supplier,
         "contact": contact,
         "phone": phone,  # "" means no number yet
-        "ig": IG_MAP.get(supplier, ""),
+        "ig": ig,
     })
 
 # ---- Schedule ----
