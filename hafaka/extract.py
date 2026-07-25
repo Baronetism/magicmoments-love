@@ -21,7 +21,7 @@ SUPPLIER_MAP = {
     "אלירן": ("רב", "רבנות"),
     "טריאולי": ("להקה", "טריולי"),
     "טריולי": ("להקה", "טריולי"),
-    "ארינה": ("פרחים", "Sinteza"),
+    "ארינה": ("זר כלה", "Sinteza"),
 }
 
 # supplier (company) -> Instagram handle (public); "" = unknown
