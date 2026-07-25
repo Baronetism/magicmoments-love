@@ -24,6 +24,19 @@ SUPPLIER_MAP = {
     "ארינה": ("פרחים", "Sinteza"),
 }
 
+# supplier (company) -> Instagram handle (public); "" = unknown
+IG_MAP = {
+    "Inbal Dror": "inbaldrorofficial",
+    "DRISCO": "driscohotel",
+    "בון בון": "bonbon_tlv",
+    "ביני בוקה": "bini.bouquet",
+    "מורן מעיין": "moran_mayan_photographer",
+    "Final Drum": "benguter",
+    "טריולי": "trioli_band",
+    "ריקי בן ארי": "riki_ben_ari",
+    "Names": "names_il",
+}
+
 
 def clean(v):
     if v is None:
@@ -54,6 +67,7 @@ for r in ws.iter_rows(min_row=2, values_only=True):
         "supplier": supplier,
         "contact": contact,
         "phone": phone,  # "" means no number yet
+        "ig": IG_MAP.get(supplier, ""),
     })
 
 # ---- Schedule ----
