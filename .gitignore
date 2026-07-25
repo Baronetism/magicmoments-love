@@ -1,1 +1,6 @@
 .DS_Store
+
+# Vendor data — keep plaintext OUT of the public repo. Only the encrypted
+# hafaka/index.html is committed.
+ספקים ולוז.xlsx
+hafaka/data.json
