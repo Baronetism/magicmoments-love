@@ -250,7 +250,8 @@
     async function unlock(password) {
       const data = await decrypt(password, PAYLOAD); // throws on wrong password
       DATA = data;
-      try { sessionStorage.setItem("hafaka_data", JSON.stringify(data)); } catch (e) {}
+      // keep unlocked for the session; re-decrypt the live payload on each load (always fresh)
+      try { sessionStorage.setItem("hafaka_pw", password); } catch (e) {}
       showApp();
     }
 
@@ -454,17 +455,19 @@
     });
 
     /* ---------- boot: restore session if already unlocked ---------- */
-    (function boot() {
-      let cached = null;
-      try { cached = sessionStorage.getItem("hafaka_data"); } catch (e) {}
-      if (cached) {
+    (async function boot() {
+      let pw = null;
+      try { pw = sessionStorage.getItem("hafaka_pw"); } catch (e) {}
+      if (pw) {
         try {
-          DATA = JSON.parse(cached);
+          DATA = await decrypt(pw, PAYLOAD); // re-decrypt the CURRENT payload -> always latest data
           showApp();
           const t = localStorage.getItem("hafaka_tab");
           if (t === "suppliers" || t === "family") switchTab(t);
           return;
-        } catch (e) {}
+        } catch (e) {
+          try { sessionStorage.removeItem("hafaka_pw"); } catch (e2) {}
+        }
       }
       $("pw").focus();
     })();
