@@ -583,7 +583,7 @@
       const rels = fam.filter((c) => !isCouple(c));
       let html = "";
       if (couple.length) { html += `<div class="cat-h">הזוג</div>`; couple.forEach((c) => (html += contactCard(c, true))); }
-      if (rels.length) { html += `<div class="cat-h">משפחה</div>`; rels.forEach((c) => (html += contactCard(c, true))); }
+      if (rels.length) { html += `<div class="cat-h">נציגי משפחה</div>`; rels.forEach((c) => (html += contactCard(c, true))); }
       $("family-list").innerHTML = html || `<div class="empty">—</div>`;
     }
     $("search").addEventListener("input", (e) => renderSuppliers(e.target.value));
