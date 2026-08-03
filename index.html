@@ -340,6 +340,30 @@
     .sound-toggle.muted .ic-off { display: block; }
     .sound-toggle.muted { background: rgba(131, 32, 45, 0.55); }
 
+    /* ---------- language toggle ---------- */
+    .lang-toggle {
+      position: fixed;
+      top: max(14px, env(safe-area-inset-top));
+      right: 14px;
+      z-index: 110;
+      height: 44px;
+      padding: 0 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 999px;
+      background: rgba(131, 32, 45, 0.35);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      color: #FFF6F0;
+      font-family: 'Assistant', sans-serif;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(120, 30, 12, 0.3);
+      transition: transform 0.15s ease;
+    }
+    .lang-toggle:active { transform: scale(0.94); }
+
     @keyframes rise {
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -401,6 +425,9 @@
       <line x1="16" y1="9" x2="22" y2="15"/>
     </svg>
   </button>
+
+  <!-- Language toggle (sits above the cover so it works on both screens) -->
+  <button id="langToggle" class="lang-toggle" type="button" aria-label="Switch language / החלפת שפה">English</button>
 
   <div class="page">
 
@@ -526,6 +553,75 @@
       });
 
       reflect(); // starts in the "muted" look until the letter is opened
+    })();
+  </script>
+
+  <script>
+    // ---------- English / Hebrew translation ----------
+    (function () {
+      var htmlEl = document.documentElement;
+      var t = document.getElementById('langToggle');
+      var coverTitle = document.querySelector('.cover-title');
+      var cta = document.querySelector('.open-cta');
+      var greeting = document.querySelector('.greeting');
+      var paras = Array.prototype.slice.call(document.querySelectorAll('.letter p'));
+      var love = document.querySelector('.sign .love');
+      var names = document.querySelector('.sign .names');
+      var titleTag = document.querySelector('title');
+
+      var EN = {
+        title: 'Baronet & Guy · Thank you for coming',
+        coverHTML: 'Baronet<span class="amp">&amp;</span>Guy',
+        cta: 'Tap to open the letter',
+        greeting: 'Our dear family, friends and guests,',
+        paras: [
+          "We wanted to write you a little letter, to thank you for coming to celebrate with us on this special day, a day that is such a meaningful milestone in our lives.",
+          "But more than anything, we wanted to thank you for all the moments you have shared with us beyond this day. For your love, your friendship and your presence in our lives over the years.",
+          "For the big moments, of course, but also for all the “small” moments, which are really not small at all.",
+          "You are probably asking yourselves:",
+          "“Why am I holding a jar of Dijon mayonnaise?”",
+          "And that is a great question.",
+          "We simply love this mayonnaise.",
+          "It is always in our home, it goes with everything, and it turns an ordinary meal into something a little tastier and more fun.",
+          "And after an evening that is one big moment, we wanted to send you home with something for the ordinary moments. For an improvised dinner. For a sandwich that feels like it is missing something.",
+          "Something small, useful and tasty, to remind you of us even after the music stops and life goes on through thousands of little moments.",
+          "So thank you for being with us in this big moment.",
+          "And an even bigger thank you for all the moments that came before it, and all those still to come."
+        ],
+        love: 'With all our love,',
+        names: 'Baronet & Guy'
+      };
+      var HE = {
+        title: titleTag.textContent,
+        coverHTML: coverTitle.innerHTML,
+        cta: cta.textContent,
+        greeting: greeting.textContent,
+        paras: paras.map(function (p) { return p.textContent; }),
+        love: love.textContent,
+        names: names.textContent
+      };
+      function setLang(lang) {
+        var s = lang === 'en' ? EN : HE;
+        titleTag.textContent = s.title;
+        coverTitle.innerHTML = s.coverHTML;
+        cta.textContent = s.cta;
+        greeting.textContent = s.greeting;
+        paras.forEach(function (p, i) { if (s.paras[i] != null) p.textContent = s.paras[i]; });
+        love.textContent = s.love;
+        names.textContent = s.names;
+        htmlEl.lang = lang;
+        htmlEl.dir = lang === 'en' ? 'ltr' : 'rtl';
+        t.textContent = lang === 'en' ? 'עברית' : 'English';
+        try { localStorage.setItem('mm_lang', lang); } catch (e) {}
+      }
+      var cur = 'he';
+      try { cur = localStorage.getItem('mm_lang') || 'he'; } catch (e) {}
+      if (cur === 'en') setLang('en');
+      t.addEventListener('click', function (e) {
+        e.stopPropagation();
+        cur = cur === 'he' ? 'en' : 'he';
+        setLang(cur);
+      });
     })();
   </script>
 </body>
